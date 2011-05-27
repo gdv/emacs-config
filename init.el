@@ -2,12 +2,23 @@
 ;; Copyright (C) 2010 Dimitri Fontaine
 ;;
 ;; Author: Dimitri Fontaine <dim@tapoueh.org>
-;; URL: https://github.com/dimitri/emacs-kicker
-;; Created: 2011-04-15
+;; Modified by Gianluca Della Vedova
+;; URL: https://github.com/gdv/emacs-kicker
+;; 
 ;; Keywords: emacs setup el-get kick-start starter-kit
-;; Licence: WTFPL, grab your copy here: http://sam.zoy.org/wtfpl/
+;; Licence: GPLv3
 ;;
-;; This file is NOT part of GNU Emacs.
+
+; Taken from Emacs Starter Kit
+(progn
+  ;; Turn off mouse interface early in startup to avoid momentary display
+  (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+    (when (fboundp mode) (funcall mode -1))))
+
+
+  ;; You can keep system- or user-specific customizations here
+(add-hook 'after-init-hook 'my-after-init)
+
 
 (require 'cl)				; common lisp goodies, loop
 
@@ -29,14 +40,6 @@
    php-mode-improved			; if you're into php...
    switch-window			; takes over C-x o
    auto-complete			; complete as you type with overlays
-   zencoding-mode			; http://www.emacswiki.org/emacs/ZenCoding
-
-   (:name buffer-move			; have to add your own keys
-	  :after (lambda ()
-		   (global-set-key (kbd "<C-S-up>")     'buf-move-up)
-		   (global-set-key (kbd "<C-S-down>")   'buf-move-down)
-		   (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-		   (global-set-key (kbd "<C-S-right>")  'buf-move-right)))
 
    (:name smex				; a better (ido like) M-x
 	  :after (lambda ()
@@ -46,32 +49,22 @@
 
    (:name magit				; git meet emacs, and a binding
 	  :after (lambda ()
-		   (global-set-key (kbd "C-x C-z") 'magit-status)))
+		   (global-set-key [(f8)] 'magit-status)))
 
    (:name goto-last-change		; move pointer back to last change
 	  :after (lambda ()
 		   ;; when using AZERTY keyboard, consider C-x C-_
 		   (global-set-key (kbd "C-x C-/") 'goto-last-change)))))
 
-(unless (string-match "apple-darwin" system-configuration)
-  (loop for p in '(color-theme		; nice looking emacs
-		   color-theme-tango	; check out color-theme-solarized
-		   )
-	do (add-to-list 'el-get-sources p)))
-
 ;;
 ;; Some recipes require extra tools to be installed
 ;;
 ;; Note: el-get-install requires git, so we know we have at least that.
-;;
-(when (el-get-executable-find "cvs")
-  (add-to-list 'el-get-sources 'emacs-goodies-el)) ; the debian addons for emacs
-
-(when (el-get-executable-find "svn")
-  (loop for p in '(psvn    		; M-x svn-status
-		   yasnippet		; powerful snippet mode
-		   )
-	do (add-to-list 'el-get-sources p)))
+;(when (el-get-executable-find "svn")
+;  (loop for p in '(
+;		   yasnippet		; powerful snippet mode
+;		   )
+;	do (add-to-list 'el-get-sources p)))
 
 ;; install new packages and init already installed packages
 (el-get 'sync)
@@ -83,17 +76,11 @@
 
 (tool-bar-mode -1)			; no tool bar with icons
 (scroll-bar-mode -1)			; no scroll bars
-(unless (string-match "apple-darwin" system-configuration)
-  ;; on mac, there's always a menu bar drown, don't have it empty
-  (menu-bar-mode -1))
 
 ;; choose your own fonts, in a system dependant way
-(if (string-match "apple-darwin" system-configuration)
-    (set-face-font 'default "Monaco-13")
-  (set-face-font 'default "Monospace-10"))
+(set-default-font "Inconsolata-14")
 
 (global-hl-line-mode)			; highlight current line
-(global-linum-mode 1)			; add line numbers on the left
 
 ;; avoid compiz manager rendering bugs
 (add-to-list 'default-frame-alist '(alpha . 100))
@@ -101,21 +88,12 @@
 ;; copy/paste with C-c and C-v and C-x, check out C-RET too
 (cua-mode)
 
-;; under mac, have Command as Meta and keep Option for localized input
-(when (string-match "apple-darwin" system-configuration)
-  (setq mac-allow-anti-aliasing t)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier 'none))
-
 ;; Use the clipboard, pretty please, so that copy/paste "works"
 (setq x-select-enable-clipboard t)
 
 ;; Navigate windows with M-<arrows>
 (windmove-default-keybindings 'meta)
 (setq windmove-wrap-around t)
-
-; winner-mode provides C-<left> to get back to previous window layout
-(winner-mode 1)
 
 ;; whenever an external process changes a file underneath emacs, and there
 ;; was no unsaved changes in the corresponding buffer, just revert its
@@ -157,7 +135,6 @@
 ;; manager or do M-x kill-emacs.  Don't need a nice shortcut for a once a
 ;; week (or day) action.
 (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-(global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
 (global-set-key (kbd "C-x B") 'ibuffer)
 
 ;; C-x C-j opens dired with the cursor right on the file you're editing
@@ -169,3 +146,17 @@
   (set-frame-parameter nil 'fullscreen
 		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 (global-set-key [f11] 'fullscreen)
+
+;; You can keep system- or user-specific customizations here
+;; (add-hook 'after-init-hook 'my-after-init)
+;;
+(defun my-after-init()
+  (setq esk-user-dir (concat user-emacs-directory user-login-name))
+  (add-to-list 'load-path esk-user-dir)
+  (add-to-list 'load-path user-emacs-directory)
+
+  (when (file-exists-p esk-user-dir)
+       (mapc 'load (directory-files esk-user-dir nil ".*el$")))
+              (desktop-read)
+)
+
