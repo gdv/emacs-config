@@ -1,0 +1,10 @@
+el-get/
+*.lock
+*~
+.ido.last
+.smex-items
+abbrev_defs.el
+ac-comphist.dat
+auto-save-list/
+emacs.desktop
+url/
