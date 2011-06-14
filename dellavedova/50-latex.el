@@ -8,51 +8,47 @@
 (setq-default TeX-PDF-mode t)
 
 
-
-(add-hook 'LaTeX-mode-hook 'my-latex-mode-init)
-
-
-
-(defun my-latex-mode-init()
-  (interactive)
-  (setq default-fill-column 78)
-  (define-key LaTeX-mode-map [(f10)]   '(TeX-command-master "BibTeX"))
-  (define-key LaTeX-mode-map [(f9)]    'TeX-view)
-  (define-key LaTeX-mode-map [(f12)]   'save-and-latex-file)
+(add-hook 'LaTeX-mode-hook
+           #'(lambda ()
+               (interactive)
+               (setq default-fill-column 78)
+               (define-key LaTeX-mode-map [(f10)]   '(TeX-command-master "BibTeX"))
+               (define-key LaTeX-mode-map [(f9)]    'TeX-view)
+               (define-key LaTeX-mode-map [(f12)]   'save-and-latex-file)
                                         ;  (define-key LaTeX-mode-map [tab] 'indent-or-complete)
-  (setq buffer-file-coding-system 'utf-8)
-  (setq TeX-shell "/bin/bash")
-  (setq TeX-save-query nil) ; automatically save files
+               (setq buffer-file-coding-system 'utf-8)
+               (setq TeX-shell "/bin/bash")
+               (setq TeX-save-query nil) ; automatically save files
+
+               ;;Abbreviations
+               (load "latex-abbrev.el")
+               (abbrev-mode t)
+               (setq local-abbrev-table LaTeX-mode-abbrev-table)
+
+               ;; Smart quotes
+               (defadvice TeX-insert-quote (around wrap-region activate)
+                 (cond
+                  (mark-active
+                   (let ((skeleton-end-newline nil))
+                     (skeleton-insert `(nil ,TeX-open-quote _ ,TeX-close-quote) -1)))
+                  ((looking-at (regexp-opt (list TeX-open-quote TeX-close-quote)))
+                   (forward-char (length TeX-open-quote)))
+                  (t
+                   ad-do-it)))
+               (put 'TeX-insert-quote 'delete-selection nil)
 
 
-    ;;Abbreviations
-  (load "latex-abbrev.el")
-  (abbrev-mode t)
-  (setq local-abbrev-table LaTeX-mode-abbrev-table)
+               ;; More complex editing features
+                                        ;  (load "latex-bindings.el")
+                                        ;  (my-latex-bindings)
 
-  ;; Smart quotes
-  (defadvice TeX-insert-quote (around wrap-region activate)
-      (cond
-       (mark-active
-        (let ((skeleton-end-newline nil))
-          (skeleton-insert `(nil ,TeX-open-quote _ ,TeX-close-quote) -1)))
-       ((looking-at (regexp-opt (list TeX-open-quote TeX-close-quote)))
-        (forward-char (length TeX-open-quote)))
-       (t
-        ad-do-it)))
-    (put 'TeX-insert-quote 'delete-selection nil)
+               ;; Math mode for LaTex
+               (LaTeX-math-mode)
 
-
-  ;; More complex editing features
-;  (load "latex-bindings.el")
-;  (my-latex-bindings)
-
-  ;; Math mode for LaTex
-  (LaTeX-math-mode)
-
-  (imenu-add-to-menubar "Structure")
-  (make-local-variable 'write-contents-hooks)
-  (add-hook 'write-contents-hooks 'source-untabify))
+               (imenu-add-to-menubar "Structure")
+               (make-local-variable 'write-contents-hooks)
+               (add-hook 'write-contents-hooks 'source-untabify)
+               ))
 
 
 
@@ -64,6 +60,7 @@
 ;;   If you want to make AUC TeX aware of style files and multi-file
 ;;   documents right away, insert the following in your `.emacs' file.
 (setq TeX-auto-save t)
+(setq TeX-save-query nil) ;;autosave before compiling
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 

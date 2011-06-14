@@ -90,7 +90,7 @@
 
 
 ;(require 'highlight-parentheses)
-
+;(setq 'highlight-current-line-globally t nil (highlight-current-line))
 ;;;
 ;;;Semantic
 ;;;;;;
@@ -130,3 +130,12 @@
   (define-key isearch-mode-map (kbd "C-v") 'isearch-yank-kill)
 )
 (add-hook 'isearch-mode-hook 'windows-isearch-hook)
+
+
+;; Flymake
+(add-to-list 'exec-path '"~/bin/")
+(require 'flymake)
+(setq flymake-allowed-file-name-masks (quote (("\\.\\(?:c\\(?:pp\\|xx\\|\\+\\+\\)?\\|CC\\)\\'" flymake-simple-make-init)
+                                              ("\\.h\\'" flymake-master-make-header-init flymake-master-cleanup)
+                                              ("\\.idl\\'" flymake-simple-make-init))))
+(add-hook 'find-file-hook 'flymake-find-file-hook)

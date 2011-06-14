@@ -41,6 +41,11 @@
    switch-window			; takes over C-x o
    auto-complete			; complete as you type with overlays
 
+   (:name pabbrev	; predictive abbreviation
+;	  :after (lambda ()
+;		   (global-pabbrev-mode t))
+   )
+
    (:name smex				; a better (ido like) M-x
 	  :after (lambda ()
 		   (setq smex-save-file "~/.emacs.d/.smex-items")

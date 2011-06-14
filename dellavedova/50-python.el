@@ -35,11 +35,29 @@ invoked from a Python process, it will switch back to the `python-mode' buffer."
         ;; buffer's dead; clear the variable.
         (setq python-last-buffer nil)))))
 
-(define-key inferior-python-mode-map (kbd "<f12>") 'toggle-between-python-buffers)
-(define-key python-mode-map (kbd "<f12>") 'toggle-between-python-buffers)
-
  (add-hook 'python-mode-hook
    #'(lambda ()
-       (define-key python-mode-map "\C-m" 'newline-and-indent)))
-
-
+       (unless (eq buffer-file-name nil) (flymake-mode 1)) ;dont invoke flymake on temporary buffers for the interpreter
+       (local-set-key [(shift f2)] 'flymake-goto-prev-error)
+       (local-set-key [f2] 'flymake-goto-next-error)
+       (local-set-key [(f11)] 'flymake-display-err-menu-for-current-line)
+       (local-set-key [(control m)] 'newline-and-indent)
+       (local-set-key [(f12)] 'python-shell-switch-to-shell)
+       (setq
+        python-check-command "pycheckers"
+        python-shell-interpreter "python3 /home/dellavedova/temp/External/ipython-py3k/ipython.py"
+        python-shell-interpreter-args '( "-colors" "Linux")
+        python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+        python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+        python-shell-completion-setup-code ""
+        python-shell-completion-string-code "';'.join(__IP.complete('''%s'''))\n")
+       ))
+;; Flymake for python
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))
+           (local-file (file-relative-name temp-file
+                                           (file-name-directory buffer-file-name))))
+      (list "pycheckers"  (list local-file))))
+   (add-to-list 'flymake-allowed-file-name-masks
+             '("\\.py\\'" flymake-pyflakes-init)))
