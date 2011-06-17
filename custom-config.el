@@ -3,6 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(el-get-standard-packages (quote ("flymake-cursor" "el-get" "escreen" "php-mode-improved" "switch-window" "auto-complete" "pabbrev" "smex" "magit" "goto-last-change")))
  '(muse-colors-autogen-headings (quote outline))
  '(muse-colors-inline-image-method (quote muse-colors-use-publishing-directory))
  '(muse-html-charset-default "utf-8")

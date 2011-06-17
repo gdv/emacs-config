@@ -4,7 +4,7 @@
 ;; Author: Dimitri Fontaine <dim@tapoueh.org>
 ;; Modified by Gianluca Della Vedova
 ;; URL: https://github.com/gdv/emacs-kicker
-;; 
+;;
 ;; Keywords: emacs setup el-get kick-start starter-kit
 ;; Licence: GPLv3
 ;;
@@ -36,30 +36,33 @@
 (setq
  el-get-sources
  '(el-get				; el-get is self-hosting
-   escreen            			; screen for emacs, C-\ C-h
+   escreen                              ; screen for emacs, C-\ C-h
    php-mode-improved			; if you're into php...
    switch-window			; takes over C-x o
    auto-complete			; complete as you type with overlays
 
    (:name pabbrev	; predictive abbreviation
-;	  :after (lambda ()
-;		   (global-pabbrev-mode t))
+;         :after (lambda ()
+;                  (global-pabbrev-mode t))
    )
 
    (:name smex				; a better (ido like) M-x
-	  :after (lambda ()
-		   (setq smex-save-file "~/.emacs.d/.smex-items")
-		   (global-set-key (kbd "M-x") 'smex)
-		   (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
+          :after (lambda ()
+                   (setq smex-save-file "~/.emacs.d/.smex-items")
+                   (global-set-key (kbd "M-x") 'smex)
+                   (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
 
    (:name magit				; git meet emacs, and a binding
-	  :after (lambda ()
-		   (global-set-key [(f8)] 'magit-status)))
+          :after (lambda ()
+                   (global-set-key [(f8)] 'magit-status)))
+   (:name flymake-cursor
+          :after (lambda ()
+                   (global-set-key [(f8)] 'magit-status)))
 
    (:name goto-last-change		; move pointer back to last change
-	  :after (lambda ()
-		   ;; when using AZERTY keyboard, consider C-x C-_
-		   (global-set-key (kbd "C-x C-/") 'goto-last-change)))))
+          :after (lambda ()
+                   ;; when using AZERTY keyboard, consider C-x C-_
+                   (global-set-key (kbd "C-x C-/") 'goto-last-change)))))
 
 ;;
 ;; Some recipes require extra tools to be installed
@@ -67,8 +70,8 @@
 ;; Note: el-get-install requires git, so we know we have at least that.
 ;(when (el-get-executable-find "svn")
 ;  (loop for p in '(
-;		   yasnippet		; powerful snippet mode
-;		   )
+;                  yasnippet		; powerful snippet mode
+;                  )
 ;	do (add-to-list 'el-get-sources p)))
 
 ;; install new packages and init already installed packages
@@ -149,7 +152,7 @@
 (defun fullscreen ()
   (interactive)
   (set-frame-parameter nil 'fullscreen
-		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 (global-set-key [f11] 'fullscreen)
 
 ;; You can keep system- or user-specific customizations here
@@ -164,4 +167,3 @@
        (mapc 'load (directory-files esk-user-dir nil ".*el$")))
               (desktop-read)
 )
-

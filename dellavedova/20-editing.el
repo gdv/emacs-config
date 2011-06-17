@@ -135,6 +135,7 @@
 ;; Flymake
 (add-to-list 'exec-path '"~/bin/")
 (require 'flymake)
+(require 'flymake-cursor)
 (setq flymake-allowed-file-name-masks (quote (("\\.\\(?:c\\(?:pp\\|xx\\|\\+\\+\\)?\\|CC\\)\\'" flymake-simple-make-init)
                                               ("\\.h\\'" flymake-master-make-header-init flymake-master-cleanup)
                                               ("\\.idl\\'" flymake-simple-make-init))))
