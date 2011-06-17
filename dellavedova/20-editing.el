@@ -133,7 +133,7 @@
 
 
 ;; Flymake
-(add-to-list 'exec-path '"~/bin/")
+(add-to-list 'exec-path '"~/.emacs.d/bin/")
 (require 'flymake)
 (require 'flymake-cursor)
 (setq flymake-allowed-file-name-masks (quote (("\\.\\(?:c\\(?:pp\\|xx\\|\\+\\+\\)?\\|CC\\)\\'" flymake-simple-make-init)
