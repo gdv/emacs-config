@@ -9,6 +9,7 @@
 (setq apropos-sort-by-scores t)
 (put 'eval-expression 'disabled nil)
 
+(setq temporary-file-directory "/tmp")
 
 ; Customize related files
 (setq custom-file "~/.emacs.d/custom-config.el")
