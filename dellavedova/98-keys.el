@@ -46,6 +46,9 @@
 (global-set-key [(alt \')]           "]")
 (global-set-key [(alt .)]           "{")
 (global-set-key [(alt -)]           "}")
+(global-set-key (kbd "ç") (kbd "{"))
+(global-set-key (kbd "°") (kbd "}"))
+(global-set-key (kbd "§") (kbd "`"))
 
 
 (global-set-key "\C-c;" 'comment-region)
