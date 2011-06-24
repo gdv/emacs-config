@@ -21,3 +21,9 @@
 ;; Make executable each script
 (add-hook 'after-save-hook
             'executable-make-buffer-file-executable-if-script-p)
+
+
+;; Add Marmalade
+(add-to-list
+  'package-archives
+  '("marmalade" . "http://marmalade-repo.org/packages/"))

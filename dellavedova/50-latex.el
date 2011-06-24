@@ -48,7 +48,16 @@
                (imenu-add-to-menubar "Structure")
                (make-local-variable 'write-contents-hooks)
                (add-hook 'write-contents-hooks 'source-untabify)
+                                        ; Make compilation window go away if there is no error
+                                        ;http://www.emacswiki.org/emacs/ModeCompile
+               (kill-local-variable 'compile-command)
+               (setq mode-compile-modes-alist
+                     (append '((latex-mode . (tex-compile kill-compilation)))
+                             mode-compile-modes-alist))
+
+
                ))
+
 
 
 
