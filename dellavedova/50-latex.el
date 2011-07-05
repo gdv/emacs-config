@@ -12,9 +12,12 @@
            #'(lambda ()
                (interactive)
                (setq default-fill-column 78)
-               (define-key LaTeX-mode-map [(f10)]   '(TeX-command-master "BibTeX"))
+;               (define-key LaTeX-mode-map [(f10)]   '(TeX-command-master "BibTeX"))
                (define-key LaTeX-mode-map [(f9)]    'TeX-view)
                (define-key LaTeX-mode-map [(f12)]   'save-and-latex-file)
+               (define-key LaTeX-mode-map (kbd "_") 'tex-smart-underscore)
+               (define-key LaTeX-mode-map (kbd "^") 'tex-smart-caret)
+               (define-key LaTeX-mode-map (kbd ".") 'tex-smart-period)
                                         ;  (define-key LaTeX-mode-map [tab] 'indent-or-complete)
                (setq buffer-file-coding-system 'utf-8)
                (setq TeX-shell "/bin/bash")
@@ -51,9 +54,9 @@
                                         ; Make compilation window go away if there is no error
                                         ;http://www.emacswiki.org/emacs/ModeCompile
                (kill-local-variable 'compile-command)
-               (setq mode-compile-modes-alist
-                     (append '((latex-mode . (tex-compile kill-compilation)))
-                             mode-compile-modes-alist))
+               ;; (setq mode-compile-modes-alist
+               ;;       (append '((latex-mode . (tex-compile kill-compilation)))
+               ;;               mode-compile-modes-alist))
 
 
                ))
@@ -151,3 +154,62 @@ the confirmation garbage."
   (if (file-exists-p "Makefile")
       (compile "make -k")
       (TeX-command "LaTeX" 'TeX-master-file -1)))
+
+
+;; following for latex, adapted from ess-smart-underscore
+;; can also be implemented using sequential command http://www.emacswiki.org/emacs/SequentialCommand
+(defun tex-smart-underscore ()
+  "Smart \"_\" key: insert \"_{}\".
+If the underscore key is pressed a second time, \"_{}\" is removed and replaced by the underscore."
+  (interactive)
+  (let ((assign-len (length "_{")))
+    (if (and
+         (>= (point) (+ assign-len (point-min))) ;check that we can move back
+         (save-excursion
+           (backward-char assign-len)
+           (looking-at "_{}")))
+      ;; If we are currently looking at ess-S-assign, replace it with _
+        (progn
+          (forward-char)
+          (delete-backward-char (+ 1 assign-len))
+          (insert "_"))
+    (delete-horizontal-space)
+    (insert "_{}")
+    (backward-char))))
+
+(defun tex-smart-caret ()
+  "Smart \"^\" key: insert \"^{}\".
+If the caret key is pressed a second time, \"^{}\" is removed and replaced by the caret."
+  (interactive)
+  (let ((assign-len (length "^{")))
+    (if (and
+         (>= (point) (+ assign-len (point-min))) ;check that we can move back
+         (save-excursion
+           (backward-char assign-len)
+           (looking-at "\\^{}"))) ;; looking-at reads regexp, so need to escape the caret character
+      ;; If we are currently looking at ess-S-assign, replace it with ^
+        (progn
+          (forward-char)
+          (delete-backward-char (+ 1 assign-len))
+          (insert "^"))
+    (delete-horizontal-space)
+    (insert "^{}")
+    (backward-char))))
+
+
+(defun tex-smart-period ()
+  "Smart \".\" key: insert \".  \n\".
+If the period key is pressed a second time, \".  \n\" is removed and replaced by the period."
+  (interactive)
+  (let ((assign-len (length ".  %%\n")))
+    (if (and
+         (>= (point) (+ assign-len (point-min))) ;check that we can move back
+         (save-excursion
+           (backward-char assign-len)
+           (looking-at "\\.  %%")))
+      ;; If we are currently looking at ess-S-assign, replace it with _
+        (progn
+          (delete-backward-char assign-len)
+          (insert "."))
+    (delete-horizontal-space)
+    (insert ".  %%\n"))))
