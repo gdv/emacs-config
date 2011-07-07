@@ -43,6 +43,7 @@ invoked from a Python process, it will switch back to the `python-mode' buffer."
        (local-set-key [(f11)] 'flymake-display-err-menu-for-current-line)
        (local-set-key [(control m)] 'newline-and-indent)
        (local-set-key [(f12)] 'python-shell-switch-to-shell)
+       (which-func-mode 1)
        (setq
         python-check-command "pycheckers"
         python-shell-interpreter "python3 /home/dellavedova/temp/External/ipython-py3k/ipython.py"

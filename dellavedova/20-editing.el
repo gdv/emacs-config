@@ -140,3 +140,26 @@
                                               ("\\.h\\'" flymake-master-make-header-init flymake-master-cleanup)
                                               ("\\.idl\\'" flymake-simple-make-init))))
 (add-hook 'find-file-hook 'flymake-find-file-hook)
+
+ ;;mode-compile
+(autoload 'mode-compile "mode-compile"
+  "Command to compile current buffer file based on the major mode"
+  t)
+(global-set-key "\C-cc" 'mode-compile)
+(autoload 'mode-compile-kill "mode-compile"
+  "Command to kill a compilation launched by `mode-compile'"
+  t)
+(global-set-key "\C-ck" 'mode-compile-kill)
+;; Helper for compilation. Close the compilation window if
+;; there was no error at all.
+(defun compilation-exit-autoclose (status code msg)
+  ;; If M-x compile exists with a 0
+  (when (and (eq status 'exit) (zerop code))
+    ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+    (bury-buffer)
+    ;; and delete the *compilation* window
+    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
+  ;; Always return the anticipated result of compilation-exit-message-function
+  (cons msg code))
+;; Specify my function (maybe I should have done a lambda function)
+(setq compilation-exit-message-function 'compilation-exit-autoclose)

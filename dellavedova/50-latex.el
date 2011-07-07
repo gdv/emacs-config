@@ -19,9 +19,12 @@
                (define-key LaTeX-mode-map (kbd "^") 'tex-smart-caret)
                (define-key LaTeX-mode-map (kbd ".") 'tex-smart-period)
                                         ;  (define-key LaTeX-mode-map [tab] 'indent-or-complete)
+
                (setq buffer-file-coding-system 'utf-8)
                (setq TeX-shell "/bin/bash")
                (setq TeX-save-query nil) ; automatically save files
+
+               (which-func-mode 1)
 
                ;;Abbreviations
                (load "latex-abbrev.el")
@@ -58,6 +61,10 @@
                ;;       (append '((latex-mode . (tex-compile kill-compilation)))
                ;;               mode-compile-modes-alist))
 
+                                        ; Flymake
+               (flymake-mode 1)
+               (define-key LaTeX-mode-map '[M-up] 'flymake-goto-prev-error)
+               (define-key LaTeX-mode-map '[M-down] 'flymake-goto-next-error)
 
                ))
 
@@ -152,7 +159,7 @@ the confirmation garbage."
   (interactive)
   (TeX-save-document (TeX-master-file))
   (if (file-exists-p "Makefile")
-      (compile "make -k")
+      (compile "make -k pdf")
       (TeX-command "LaTeX" 'TeX-master-file -1)))
 
 

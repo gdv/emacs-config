@@ -8,9 +8,6 @@
  (add-hook 'c-mode-hook
            #'(lambda ()
                (interactive)
-               ;; Tell cc-mode not to check for old-style (K&R) function declarations.
-               ;; This speeds up indenting a lot.
-               (setq c-recognize-knr-p nil)
                (define-key c-mode-base-map [(control M)] 'reindent-then-newline-and-indent)
                (define-key c-mode-base-map [f12] 'compile)
                (define-key c-mode-base-map [(meta right)] 'c-forward-into-nomenclature)
@@ -25,6 +22,9 @@
 
                (make-local-variable 'write-contents-hooks)
                (add-hook 'write-contents-hooks 'source-untabify)
+               ;; Tell cc-mode not to check for old-style (K&R) function declarations.
+               ;; This speeds up indenting a lot.
+               (setq c-recognize-knr-p nil)
 
                (imenu-add-to-menubar "Functions")
                (setq c-default-style "linux")
@@ -37,6 +37,6 @@
                (setq c-auto-newline 1)
 
                (setq buffer-file-coding-system 'utf-8)
-
-               (flyspell-prog-mode)
+               (which-func-mode 1)
+               (flymake-mode 1)
                ))

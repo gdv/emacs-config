@@ -16,6 +16,8 @@
               (c-set-offset 'arglist-intro '+)
               (c-set-offset 'case-label 2)
               (c-set-offset 'arglist-close 0)
+              (define-key php-mode-map ‘[M-up] ‘flymake-goto-prev-error)
+              (define-key php-mode-map ‘[M-down] ‘flymake-goto-next-error)
               (set (make-local-variable 'compile-command)
                    (format "php_lint %s" (buffer-file-name)))
               ))
@@ -23,7 +25,6 @@
 ; Taken from http://www.enigmacurry.com/2011/07/01/php-code-compliance-in-emacs/
 
 (require 'php-mode)
-(require 'flymake)
 
 ; Flymake
 
