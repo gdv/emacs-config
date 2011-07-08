@@ -1,6 +1,7 @@
 el-get/
 *.lock
 *~
+*.elc
 .ido.last
 .smex-items
 abbrev_defs.el
