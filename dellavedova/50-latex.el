@@ -11,7 +11,7 @@
 (add-hook 'LaTeX-mode-hook
            #'(lambda ()
                (interactive)
-               (setq default-fill-column 78)
+               (setq fill-column 78)
 ;               (define-key LaTeX-mode-map [(f10)]   '(TeX-command-master "BibTeX"))
                (define-key LaTeX-mode-map [(f9)]    'TeX-view)
                (define-key LaTeX-mode-map [(f12)]   'save-and-latex-file)
@@ -22,7 +22,6 @@
 
                (setq buffer-file-coding-system 'utf-8)
                (setq TeX-shell "/bin/bash")
-               (setq TeX-save-query nil) ; automatically save files
 
                (which-func-mode 1)
 
@@ -43,15 +42,19 @@
                    ad-do-it)))
                (put 'TeX-insert-quote 'delete-selection nil)
 
-
                ;; More complex editing features
-                                        ;  (load "latex-bindings.el")
-                                        ;  (my-latex-bindings)
+               ;;  (load "latex-bindings.el")
+               ;;  (my-latex-bindings)
 
                ;; Math mode for LaTex
                (LaTeX-math-mode)
 
+               ;; Add a document headings menu
                (imenu-add-to-menubar "Structure")
+               (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+               (add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
+
+
                (make-local-variable 'write-contents-hooks)
                (add-hook 'write-contents-hooks 'source-untabify)
                                         ; Make compilation window go away if there is no error
@@ -66,6 +69,8 @@
                (define-key LaTeX-mode-map '[M-up] 'flymake-goto-prev-error)
                (define-key LaTeX-mode-map '[M-down] 'flymake-goto-next-error)
 
+               (defun flymake-get-tex-args (file-name)
+                 (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
                ))
 
 
@@ -104,6 +109,14 @@
 (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase mode" t)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
 (add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
+
+(setq reftex-format-cite-function
+          '(lambda (key fmt)
+             (let ((cite (replace-regexp-in-string "%l" key fmt)))
+               (if (or (= ?~ (string-to-char fmt))
+                       (member (preceding-char) '(?\ ?\t ?\n ?~)))
+                   cite
+                 (concat "~" cite)))))
 
 ;; Make RefTeX faster
 (setq reftex-enable-partial-scans t)
