@@ -49,6 +49,11 @@
                ;; Math mode for LaTex
                (LaTeX-math-mode)
 
+               ;; Outline mode
+               (outline-minor-mode t)
+               (define-key LaTeX-mode-map '[C-prev] 'outline-previo-visible-heading)
+               (define-key LaTeX-mode-map '[C-next] 'outline-next-visible-heading)
+
                ;; Add a document headings menu
                (imenu-add-to-menubar "Structure")
                (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
@@ -64,13 +69,16 @@
                ;;       (append '((latex-mode . (tex-compile kill-compilation)))
                ;;               mode-compile-modes-alist))
 
-                                        ; Flymake
+               ;; Flymake
                (flymake-mode 1)
                (define-key LaTeX-mode-map '[M-up] 'flymake-goto-prev-error)
                (define-key LaTeX-mode-map '[M-down] 'flymake-goto-next-error)
 
                (defun flymake-get-tex-args (file-name)
                  (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
+
+               ;; Flyspell
+               (flyspell-mode t)
                ))
 
 
@@ -221,15 +229,15 @@ If the caret key is pressed a second time, \"^{}\" is removed and replaced by th
   "Smart \".\" key: insert \".  \n\".
 If the period key is pressed a second time, \".  \n\" is removed and replaced by the period."
   (interactive)
-  (let ((assign-len (length ".  %%\n")))
+  (let ((assign-len (length ".    \n")))
     (if (and
          (>= (point) (+ assign-len (point-min))) ;check that we can move back
          (save-excursion
            (backward-char assign-len)
-           (looking-at "\\.  %%")))
+           (looking-at "\\.    ")))
       ;; If we are currently looking at ess-S-assign, replace it with _
         (progn
           (delete-backward-char assign-len)
           (insert "."))
     (delete-horizontal-space)
-    (insert ".  %%\n"))))
+    (insert ".    \n"))))

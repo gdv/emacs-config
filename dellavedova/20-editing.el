@@ -1,9 +1,3 @@
-;; My-editing.el
-;; auto completion
-;;
-;;;GDV
-;(require 'pabbrev)
-;(global-pabbrev-mode t)
 (abbrev-mode 0)
 
 ; My abbreviations
@@ -30,7 +24,7 @@
 (setq kill-whole-line t) ;will make "Ctrl-k" kills an entire line if the cursor is at the beginning of line -- very useful.
 
 ; ;; Make a passable attempt at using UTF-8 in buffers
-(setq default-buffer-file-coding-system 'utf-8)
+(setq buffer-file-coding-system 'utf-8)
 (set-language-environment "UTF-8")
 
 
@@ -50,10 +44,10 @@
 (setq-default indent-tabs-mode nil)     ; use spaces (not tabs) for indenting
 (setq kill-ring-max 10)                 ; don't save too many kills
 (setq require-final-newline t)          ; always terminate last line in file
-(setq default-major-mode 'text-mode)    ; default mode is text mode
+(setq major-mode 'text-mode)    ; default mode is text mode
 (setq next-screen-context-lines 1)      ; # of lines of overlap when scrolling
 (setq auto-save-interval 300)           ; autosave every N characters typed
-(setq default-fill-column 88)           ; the column beyond which do word wrap
+(setq fill-column 88)           ; the column beyond which do word wrap
 (setq scroll-preserve-screen-position t); make pgup/dn remember current line
 (global-auto-revert-mode 1)             ; autorevert buffers if files change
 (setq develock-max-column-plist nil)    ; disable highlighting for develock
@@ -86,7 +80,7 @@
 (setq read-quoted-char-radix 10)
 (setq yank-excluded-properties t) ; do not paste any properties
 (setq cursor-in-non-selected-windows nil)
-(setq default-indicate-empty-lines t)
+(setq indicate-empty-lines t)
 
 
 ;(require 'highlight-parentheses)
@@ -104,14 +98,6 @@
 ;;; Ediff
 (setq ediff-diff-program "diff -EbBw")
 ;;;
-
-;; Expand
-(make-hippie-expand-function
- '(try-expand-dabbrev-visible
-   try-expand-dabbrev-from-kill
-   try-expand-dabbrev-all-buffers
-   try-complete-file-name-partially
-   try-complete-file-name))
 
 ;; Unique buffer names
 (require 'uniquify)
@@ -163,3 +149,13 @@
   (cons msg code))
 ;; Specify my function (maybe I should have done a lambda function)
 (setq compilation-exit-message-function 'compilation-exit-autoclose)
+
+;; ;; Predictive mode
+;; (autoload 'predictive-mode "predictive" "predictive" t)
+;; (set-default 'predictive-auto-add-to-dict t)
+;; (setq predictive-auto-learn t
+;;       predictive-add-to-dict-ask nil
+;;       predictive-use-auto-learn-cache nil
+;;       )
+
+(global-subword-mode 1)

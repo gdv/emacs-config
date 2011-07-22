@@ -18,13 +18,3 @@
     (if (search-forward "\t" nil t)
         (untabify (1- (point)) (point-max))))
   nil)
-
-
-
-;(defun indent-or-complete ()
-;  "Complete if point is at end of a word, otherwise indent line."
-;  (interactive)
-;  (if (looking-at "\\>")
-;      (dabbrev-expand nil)
-;    (indent-for-tab-command)
-;    ))

@@ -42,8 +42,9 @@
    auto-complete			; complete as you type with overlays
 
    (:name pabbrev	; predictive abbreviation
-;         :after (lambda ()
-;                  (global-pabbrev-mode t))
+          :after (lambda ()
+                   (require 'pabbrev)
+                   (global-pabbrev-mode t))
    )
 
    (:name smex				; a better (ido like) M-x
@@ -86,7 +87,7 @@
 (scroll-bar-mode -1)			; no scroll bars
 
 ;; choose your own fonts, in a system dependant way
-(set-default-font "Inconsolata-14")
+(set-frame-font "Inconsolata-14")
 
 (global-hl-line-mode)			; highlight current line
 
