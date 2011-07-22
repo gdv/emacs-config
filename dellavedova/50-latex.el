@@ -89,6 +89,8 @@
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
 
+(setq LaTeX-math-abbrev-prefix 'ù)
+
 ;;   If you want to make AUC TeX aware of style files and multi-file
 ;;   documents right away, insert the following in your `.emacs' file.
 (setq TeX-auto-save t)
@@ -138,20 +140,20 @@
 
 (setq reftex-label-alist
       (quote (
-              ("Algorithm"   ?a "alg:"     "~\\ref{%s}" nil ("Algorithm" "Algorithms" "Algoritmo" "Alg."))
-              ("Problem"     ?b "pb:"      "~\\ref{%s}" nil ("Prob." "Problem" "Problems" "Problema"))
-              ("Claim"       ?c "cl:"      "~\\ref{%s}" nil ("Claim" "Claims" "Asserzione"))
-              ("Definition"  ?d "def:"     "~\\ref{%s}" nil ("Def." "Definition" "Definizione"))
-              ("definition"  ?d "def:"     "~\\ref{%s}" nil ("Def." "Definition" "Definizione"))
-              ("Exercise"    ?e "exe:"     "~\\ref{%s}" nil ("Exercise" "Esercizio"))
-              ("Program"     ?g "pg:"      "~\\ref{%s}" nil ("Prog." "Program" "Programma"))
-              ("Theorem"     ?h "thm:"     "~\\ref{%s}" nil ("Thm" "Theorem" "Teorema"))
-              ("Remark"      ?k "rem:"     "~\\ref{%s}" nil ("Remark" "Nota"))
-              ("Lemma"       ?l "lemma:"   "~\\ref{%s}" nil ("Lemma" "Lemmas" "Lemmata"))
-              ("Observation" ?o "obs:"     "~\\ref{%s}" nil ("Observation" "Observations" "Obs." "Osservazione"))
-              ("Proposition" ?p "prop:"    "~\\ref{%s}" nil ("Prop." "Proposition"  "Propositions" "Proposizione"))
-              ("Corollary"   ?r "cor:"     "~\\ref{%s}" nil ("Cor." "Corollary" "Corollario"))
-              ("Example"     ?x "example:" "~\\ref{%s}" nil ("Example" "Es." "Esempio"))
+              ("Algorithm"   ?a "algorithm:"      "~\\ref{%s}" nil ("Algorithm" "Algorithms" "Algoritmo" "Alg."))
+              ("Problem"     ?b "problem:"        "~\\ref{%s}" nil ("Prob." "Problem" "Problems" "Problema"))
+              ("Claim"       ?c "claim:"          "~\\ref{%s}" nil ("Claim" "Claims" "Asserzione"))
+              ("Definition"  ?d "definition:"     "~\\ref{%s}" nil ("Def." "Definition" "Definizione"))
+              ("definition"  ?d "definition:"     "~\\ref{%s}" nil ("Def." "Definition" "Definizione"))
+              ("Exercise"    ?e "exercise:"       "~\\ref{%s}" nil ("Exercise" "Esercizio"))
+              ("Program"     ?g "program:"        "~\\ref{%s}" nil ("Prog." "Program" "Programma"))
+              ("Theorem"     ?h "theorem:"        "~\\ref{%s}" nil ("Thm" "Theorem" "Teorema"))
+              ("Remark"      ?k "remark:"         "~\\ref{%s}" nil ("Remark" "Nota"))
+              ("Lemma"       ?l "lemma:"          "~\\ref{%s}" nil ("Lemma" "Lemmas" "Lemmata"))
+              ("Observation" ?o "observation:"    "~\\ref{%s}" nil ("Observation" "Observations" "Obs." "Osservazione"))
+              ("Proposition" ?p "proposition:"    "~\\ref{%s}" nil ("Prop." "Proposition"  "Propositions" "Proposizione"))
+              ("Corollary"   ?r "corollary:"      "~\\ref{%s}" nil ("Cor." "Corollary" "Corollario"))
+              ("Example"     ?x "example:"        "~\\ref{%s}" nil ("Example" "Es." "Esempio"))
               )))
 
 ;; Define the functions that we calls from the toolbar
