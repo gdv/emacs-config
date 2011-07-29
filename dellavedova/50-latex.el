@@ -89,8 +89,6 @@
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
 
-(setq LaTeX-math-abbrev-prefix 'ù)
-
 ;;   If you want to make AUC TeX aware of style files and multi-file
 ;;   documents right away, insert the following in your `.emacs' file.
 (setq TeX-auto-save t)
