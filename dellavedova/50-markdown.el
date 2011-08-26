@@ -13,5 +13,6 @@
           '(lambda ()
              (setq default-fill-column 78)
              (turn-on-auto-fill)
+             (remove-hook 'before-save-hook 'whitespace-cleanup)
              (define-key markdown-mode-map [(control l)]    'markdown-insert-link)
              ))
