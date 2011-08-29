@@ -20,8 +20,8 @@
 ;;; ; ;; Move the mouse in upper right corner when editing
 (mouse-avoidance-mode 'cat-and-mouse)
 
-;;
-(setq kill-whole-line t) ;will make "Ctrl-k" kills an entire line if the cursor is at the beginning of line -- very useful.
+;;will make "Ctrl-k" kills an entire line if the cursor is at the beginning of line -- very usefula
+(setq kill-whole-line t)
 
 ; ;; Make a passable attempt at using UTF-8 in buffers
 (setq buffer-file-coding-system 'utf-8)
@@ -37,8 +37,9 @@
          ("" utf-8 . utf-8)))
 
 ;; nuke whitespaces when writing to a file
-;;http://ruslanspivak.com/2010/09/27/keep-track-of-whitespaces-and-column-80-overflow/#comment-712
-(add-hook 'before-save-hook 'whitespace-cleanup)
+;; except for markdown, where trailing spaces mean a newline
+(setq whitespace-global-modes '(not markdown-mode))
+(setq whitespace-action 'auto-cleanup)
 
 (setq tab-width 4)                      ; tab = 4 spaces
 (setq-default indent-tabs-mode nil)     ; use spaces (not tabs) for indenting

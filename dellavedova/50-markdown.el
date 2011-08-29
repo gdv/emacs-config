@@ -6,13 +6,11 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 
 ; Enable support for LaTeX in Markdown files
-(setq markdown-enable-itex t)
-
-
-(add-hook 'markdown-mode-hook
-          '(lambda ()
-             (setq default-fill-column 78)
-             (turn-on-auto-fill)
-             (remove-hook 'before-save-hook 'whitespace-cleanup)
-             (define-key markdown-mode-map [(control l)]    'markdown-insert-link)
-             ))
+(defun markdown-custom ()
+       "markdown-mode-hook"
+       (setq markdown-enable-itex t)
+       (setq fill-column 78)
+       (turn-on-auto-fill)
+       (define-key markdown-mode-map [(control l)]    'markdown-insert-link)
+       )
+(add-hook 'markdown-mode-hook 'markdown-custom)
