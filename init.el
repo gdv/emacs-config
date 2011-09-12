@@ -41,12 +41,20 @@
    switch-window			; takes over C-x o
    auto-complete			; complete as you type with overlays
 
-   (:name pabbrev	; predictive abbreviation
-          :after (lambda ()
-                   (require 'pabbrev)
-                   (global-pabbrev-mode t))
-   )
+;   (:name pabbrev	; predictive abbreviation
+;          :after (lambda ()
+;                   (require 'pabbrev)
+;                   (global-pabbrev-mode t))
+;   )
 
+   (:name textlint
+    :type git
+    :url "git://github.com/DamienCassou/textlint.git"
+    :website "http://scg.unibe.ch/research/textlint"
+    :description "Allows the integration of TextLint within Emacs"
+    :load "textlint.el")
+   ;;TeXtLint finds common grammatical/style errors in a text
+   
    (:name smex				; a better (ido like) M-x
           :after (lambda ()
                    (setq smex-save-file "~/.emacs.d/.smex-items")

@@ -36,10 +36,6 @@
          ("\\.tar\\'" no-conversion . no-conversion)
          ("" utf-8 . utf-8)))
 
-;; nuke whitespaces when writing to a file
-;; except for markdown, where trailing spaces mean a newline
-(setq whitespace-global-modes '(not markdown-mode))
-(setq whitespace-action 'auto-cleanup)
 
 (setq tab-width 4)                      ; tab = 4 spaces
 (setq-default indent-tabs-mode nil)     ; use spaces (not tabs) for indenting
@@ -151,12 +147,7 @@
 ;; Specify my function (maybe I should have done a lambda function)
 (setq compilation-exit-message-function 'compilation-exit-autoclose)
 
-;; ;; Predictive mode
-;; (autoload 'predictive-mode "predictive" "predictive" t)
-;; (set-default 'predictive-auto-add-to-dict t)
-;; (setq predictive-auto-learn t
-;;       predictive-add-to-dict-ask nil
-;;       predictive-use-auto-learn-cache nil
-;;       )
-
 (global-subword-mode 1)
+
+;; Auto complete
+(setq-default ac-sources '(ac-source-words-in-all-buffer))

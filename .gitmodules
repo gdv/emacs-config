@@ -1,0 +1,3 @@
+[submodule "emacs-dev-kit"]
+	path = emacs-dev-kit
+	url = ./emacs-dev-kit

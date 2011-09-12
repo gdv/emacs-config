@@ -53,6 +53,15 @@ invoked from a Python process, it will switch back to the `python-mode' buffer."
         python-shell-completion-setup-code ""
         python-shell-completion-string-code "';'.join(__IP.complete('''%s'''))\n")
        ))
+
+;; delete trailing whitespaces
+(add-hook 'python-mode-hook
+          (lambda()
+            (add-hook 'local-write-file-hooks
+                      '(lambda()
+                         (save-excursion
+                           (delete-trailing-whitespace))))))
+
 ;; Flymake for python
 (when (load "flymake" t)
   (defun flymake-pyflakes-init ()

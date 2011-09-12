@@ -82,6 +82,14 @@
                ))
 
 
+;; delete trailing whitespaces
+(add-hook 'LaTeX-mode-hook
+          (lambda()
+            (add-hook 'local-write-file-hooks
+                      '(lambda()
+                         (save-excursion
+                           (delete-trailing-whitespace))))))
+
 
 
 
