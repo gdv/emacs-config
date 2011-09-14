@@ -29,19 +29,6 @@
 ;(require 'highlight-parentheses)
 
 
-; Compilation window should be small and disappear if there is no error
-; from http://www.emacswiki.org/emacs/ModeCompile
-(setq compilation-window-height 8)
-(setq compilation-finish-functions 'compile-autoclose)
-(defun compile-autoclose (buffer string)
-  (cond ((string-match "finished" string)
-         (message "Build maybe successful: closing window.")
-         (run-with-timer 10 nil
-                         'delete-window
-                         (get-buffer-window buffer t)))
-        (t
-         (message "Compilation exited abnormally: %s" string))))
-
  ;; never use GUI file dialog
 (setq use-file-dialog nil)
 
