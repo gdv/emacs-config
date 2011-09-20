@@ -141,8 +141,8 @@
  (defun compile-autoclose (buffer string)
    (cond ((and (string-match "finished" string)
                (not (string-match "TextLint" (buffer-string))))
-          (message "Build likely successful: closing window. %s" string)
-          (run-with-timer 10 nil                      
+          (message "Build likely successful: closing window")
+          (run-with-timer 2 nil                      
                           'delete-window              
                           (get-buffer-window buffer t)))
          (t                                                                    

@@ -36,7 +36,7 @@
 (setq message-log-max 200)
 
 
-(color-theme-zenburn)
+;(color-theme-zenburn)
 
 ; Modeline
 (setq-default mode-line-format
