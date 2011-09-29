@@ -68,3 +68,9 @@
 (global-set-key [(control f8)]         'ido-dired)
 (global-set-key [(control f9)]         'deft)
 (global-set-key [(control f10)]        'anything)
+
+
+;; Font size
+(define-key global-map (kbd "C-+") 'text-scale-increase)
+(define-key global-map (kbd "C--") 'text-scale-decrease)
+

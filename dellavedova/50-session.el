@@ -2,7 +2,7 @@
 ;; Saving Emacs Sessions
 ;; =====================================================================
 (require 'session)
-;(session-initialize t)
+(session-initialize)
 
 
 

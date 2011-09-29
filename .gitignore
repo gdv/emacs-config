@@ -8,4 +8,5 @@ abbrev_defs.el
 ac-comphist.dat
 auto-save-list/
 emacs.desktop
+emacs-dev-kit
 url/

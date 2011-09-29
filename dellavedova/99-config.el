@@ -15,11 +15,7 @@
 (setq apropos-sort-by-scores t)
 (put 'eval-expression 'disabled nil)
 
-(setq temporary-file-directory "/tmp")
-
-; Customize related files
-(setq custom-file "~/.emacs.d/custom-config.el")
-(load custom-file 'noerror)
+(setq temporary-file-directory "~/temp/tmp")
 
 ;; Start server mode to enable emacsclient
 (server-start)

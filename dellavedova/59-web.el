@@ -3,15 +3,15 @@
 
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . rhtml-mode))
 (add-to-list 'auto-mode-alist '("\\.rjs\\'" . rhtml-mode))
-(add-hook 'rhtml-mode-hook 'my-ruby-mode-init)
+;(add-hook 'rhtml-mode-hook 'my-ruby-mode-init)
 
 
 
- (defun my-ruby-mode-init ()
-   (interactive)
-   (autoload 'rhtml-mode "rhtml-mode" nil t)
-   ;; Keybindings
-   )
+; (defun my-ruby-mode-init ()
+;   (interactive)
+;   (autoload 'rhtml-mode "rhtml-mode" nil t)
+;   ;; Keybindings
+;   )
 
 
 ;; YAML

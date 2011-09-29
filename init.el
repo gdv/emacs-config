@@ -1,35 +1,35 @@
-;; emacs kicker --- kick start emacs setup
+; emacs kicker --- kick start emacs setup
 ;; Copyright (C) 2010 Dimitri Fontaine
+;; Copyright (C) 2009-2011  Bozhidar Batsov.
+;; Copyright (C) 2002-2011  Gianluca Della Vedova
+;; https://github.com/gdv/emacs-kicker
 ;;
-;; Author: Dimitri Fontaine <dim@tapoueh.org>
-;; Modified by Gianluca Della Vedova
-;; URL: https://github.com/gdv/emacs-kicker
-;;
-;; Keywords: emacs setup el-get kick-start starter-kit
 ;; Licence: GPLv3
 ;;
 
-; Taken from Emacs Starter Kit
-(progn
-  ;; Turn off mouse interface early in startup to avoid momentary display
-  (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
-    (when (fboundp mode) (funcall mode -1))))
+;; Turn off mouse interface early in startup to avoid momentary display
+(tool-bar-mode -1)			; no tool bar with icons
+(scroll-bar-mode -1)			; no scroll bars
+
+;; on to the visual settings
+(setq inhibit-splash-screen t)		; no splash screen, thanks
+(line-number-mode 1)			; have line numbers and
+(column-number-mode 1)			; column numbers in the mode line
 
 
   ;; You can keep system- or user-specific customizations here
 (add-hook 'after-init-hook 'my-after-init)
 
-
 (require 'cl)				; common lisp goodies, loop
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil t)
-  (url-retrieve
-   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
-   (lambda (s)
-     (end-of-buffer)
-     (eval-print-last-sexp))))
+(require 'el-get)
+;; (unless (require 'el-get nil t)
+;;   (url-retrieve
+;;    "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
+;;    (lambda (s)
+;;      (end-of-buffer)
+;;      (eval-print-last-sexp))))
 
 ;; now either el-get is `require'd already, or have been `load'ed by the
 ;; el-get installer.
@@ -40,12 +40,6 @@
    php-mode-improved			; if you're into php...
    switch-window			; takes over C-x o
    auto-complete			; complete as you type with overlays
-
-;   (:name pabbrev	; predictive abbreviation
-;          :after (lambda ()
-;                   (require 'pabbrev)
-;                   (global-pabbrev-mode t))
-;   )
 
    (:name textlint
     :type git
@@ -64,9 +58,7 @@
    (:name magit				; git meet emacs, and a binding
           :after (lambda ()
                    (global-set-key [(f8)] 'magit-status)))
-   (:name flymake-cursor
-          :after (lambda ()
-                   (global-set-key [(f8)] 'magit-status)))
+   (:name flymake-cursor)
 
    (:name goto-last-change		; move pointer back to last change
           :after (lambda ()
@@ -86,13 +78,6 @@
 ;; install new packages and init already installed packages
 (el-get 'sync)
 
-;; on to the visual settings
-(setq inhibit-splash-screen t)		; no splash screen, thanks
-(line-number-mode 1)			; have line numbers and
-(column-number-mode 1)			; column numbers in the mode line
-
-(tool-bar-mode -1)			; no tool bar with icons
-(scroll-bar-mode -1)			; no scroll bars
 
 ;; choose your own fonts, in a system dependant way
 (set-frame-font "Inconsolata-14")
@@ -157,12 +142,10 @@
 ;; C-x C-j opens dired with the cursor right on the file you're editing
 (require 'dired-x)
 
-;; full screen
-(defun fullscreen ()
-  (interactive)
-  (set-frame-parameter nil 'fullscreen
-                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-(global-set-key [f11] 'fullscreen)
+;; Customize related files
+(setq custom-file "~/.emacs.d/custom-config.el")
+(load custom-file 'noerror)
+
 
 ;; You can keep system- or user-specific customizations here
 ;; (add-hook 'after-init-hook 'my-after-init)
@@ -174,6 +157,43 @@
 
   (when (file-exists-p esk-user-dir)
        (mapc 'load (directory-files esk-user-dir nil ".*el$")))
-              (desktop-read)
+  (desktop-read)
+
+  ;; Taken from Emacs-dev-kit
+  ;; determine the load path dirs
+  ;; as relative to the location of this file
+  (defvar dotfiles-dir "~/.emacs.d/emacs-dev-kit/"
+    "The root Emacs Lisp source folder")
+  ;; external packages reside here
+  (defvar ext-dir (concat dotfiles-dir "vendor/")
+    "The root folder for external packages")
+  (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/"))
+
+  (load (concat ext-dir "projectile.el" ))
+  (load (concat dotfiles-dir "misc-config.el"))
+  (load (concat dotfiles-dir "perl-config.el"))
+  (load (concat dotfiles-dir "coding-config.el"))
+;  (load (concat dotfiles-dir "emacs-lisp-config.el"))
+  (load (concat dotfiles-dir "c-config.el"))
+  (load (concat dotfiles-dir "python-config.el"))
+  (load (concat dotfiles-dir "ruby-config.el"))
+  (load (concat dotfiles-dir "ibuffer-config.el"))
+  (load (concat dotfiles-dir "auctex-config.el"))
+  (load (concat dotfiles-dir "nxml-config.el"))
+  ;; load misc utils
+  (load (concat dotfiles-dir "misc-utils.el"))
+  ;; load editing utils
+  (load (concat dotfiles-dir "editing-utils.el"))
+  ;; load navigation utils
+  (load (concat dotfiles-dir "navigation-utils.el"))
+  ;; load coding utils - should be done before coding configs!
+  (load (concat dotfiles-dir "coding-utils.el"))
+  
+    ;; zenburn color theme setup
+  (if (>= emacs-major-version 24)
+      (load-theme 'zenburn)
+    (progn
+      (require 'color-theme-zenburn)
+      (color-theme-zenburn)))
 )
 

@@ -3,6 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("86adc18aa6fb3ea0a801831f7b0bc88ed5999386" default)))
  '(el-get-standard-packages (quote ("auto-complete%2b" "flymake-cursor" "el-get" "escreen" "php-mode-improved" "switch-window" "auto-complete" "pabbrev" "smex" "magit" "goto-last-change")))
  '(muse-colors-autogen-headings (quote outline))
  '(muse-colors-inline-image-method (quote muse-colors-use-publishing-directory))
@@ -11,7 +12,8 @@
  '(muse-html-meta-content-encoding (quote utf-8))
  '(muse-mode-hook (quote (flyspell-mode footnote-mode)))
  '(muse-publish-comments-p t)
- '(safe-local-variable-values (quote ((buffer-file-coding-system . utf-8) (flyspell-mode . t) (whitespace-line-column . 80) (lexical-binding . t)))))
+ '(safe-local-variable-values (quote ((buffer-file-coding-system . utf-8) (flyspell-mode . t) (whitespace-line-column . 80) (lexical-binding . t))))
+ '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
