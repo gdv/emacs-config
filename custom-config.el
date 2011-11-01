@@ -3,7 +3,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("86adc18aa6fb3ea0a801831f7b0bc88ed5999386" default)))
+ '(ansi-color-names-vector [zenburn-bg zenburn-red zenburn-green zenburn-yellow zenburn-blue zenburn-magenta zenburn-cyan zenburn-fg])
+ '(custom-safe-themes (quote ("d70e8984f5e99a48e5bcd94ca3c6694d12eefb94" "86adc18aa6fb3ea0a801831f7b0bc88ed5999386" default)))
  '(el-get-standard-packages (quote ("auto-complete%2b" "flymake-cursor" "el-get" "escreen" "php-mode-improved" "switch-window" "auto-complete" "pabbrev" "smex" "magit" "goto-last-change")))
  '(muse-colors-autogen-headings (quote outline))
  '(muse-colors-inline-image-method (quote muse-colors-use-publishing-directory))

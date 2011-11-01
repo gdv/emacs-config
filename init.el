@@ -169,17 +169,6 @@
     "The root folder for external packages")
   (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/"))
 
-  (load (concat ext-dir "projectile.el" ))
-  (load (concat dotfiles-dir "misc-config.el"))
-  (load (concat dotfiles-dir "perl-config.el"))
-  (load (concat dotfiles-dir "coding-config.el"))
-;  (load (concat dotfiles-dir "emacs-lisp-config.el"))
-  (load (concat dotfiles-dir "c-config.el"))
-  (load (concat dotfiles-dir "python-config.el"))
-  (load (concat dotfiles-dir "ruby-config.el"))
-  (load (concat dotfiles-dir "ibuffer-config.el"))
-  (load (concat dotfiles-dir "auctex-config.el"))
-  (load (concat dotfiles-dir "nxml-config.el"))
   ;; load misc utils
   (load (concat dotfiles-dir "misc-utils.el"))
   ;; load editing utils
@@ -188,6 +177,27 @@
   (load (concat dotfiles-dir "navigation-utils.el"))
   ;; load coding utils - should be done before coding configs!
   (load (concat dotfiles-dir "coding-utils.el"))
+
+  
+  (load (concat ext-dir "projectile.el" ))
+  (load (concat dotfiles-dir "misc-config.el"))
+  (load (concat dotfiles-dir "coding-config.el"))
+
+  (load (concat dotfiles-dir "perl-config.el"))
+;  (load (concat dotfiles-dir "emacs-lisp-config.el"))
+  (load (concat dotfiles-dir "c-config.el"))
+
+  (load (concat dotfiles-dir "python-config.el"))
+
+  (load (concat ext-dir "feature-mode/feature-mode.el" ))
+  (load (concat dotfiles-dir "ruby-config.el"))
+
+  (load (concat dotfiles-dir "ibuffer-config.el"))
+
+  (load (concat dotfiles-dir "auctex-config.el"))
+
+  (load (concat dotfiles-dir "nxml-config.el"))
+
   
     ;; zenburn color theme setup
   (if (>= emacs-major-version 24)
