@@ -10,3 +10,9 @@ auto-save-list/
 emacs.desktop
 emacs-dev-kit
 url/
+abbrev_defs
+emacs-dev-kitrecentf
+savehist
+saveplace
+temp/
+themes/
