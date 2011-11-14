@@ -10,7 +10,8 @@
 
 ;make the y or n suffice for a yes or no question
 (fset 'yes-or-no-p 'y-or-n-p)
-
+;; Create non-existent files
+(setq confirm-nonexistent-file-or-buffer nil)
 ;;;; Window appearance
 
 ;; When you scroll down with the cursor, emacs will move down the buffer one

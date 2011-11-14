@@ -14,6 +14,7 @@
 (global-set-key [(shift remove)]       'copy-region-as-kill)
 (global-set-key [(find)]               'isearch-forward)
 (global-set-key [(control f)]          'isearch-forward)
+(global-set-key [(meta f)]             'query-replace)
 (global-set-key [(control s)]          'save-buffer)
 (global-set-key [(shift find)]         'isearch-backward)
 (global-set-key [(control shift f)]    'isearch-backward)
@@ -73,4 +74,6 @@
 ;; Font size
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
+
+
 

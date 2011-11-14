@@ -1,7 +1,9 @@
-(abbrev-mode 0)
+(abbrev-mode t)
 
 ; My abbreviations
 (setq abbrev-file-name "~/.emacs.d/abbrev_defs.el")
+(require 'pabbrev)
+(global-pabbrev-mode)
 ; Activate CUA-mode
 (cua-mode t)
 (setq cua-prefix-override-inhibit-delay 1)
@@ -60,7 +62,18 @@
 
 (defconst query-replace-highlight t)
 (defconst search-highlight t)
-(setq inhibit-startup-message t)
+(setq inhibit-startup-message t
+      inhibit-startup-echo-area-message t)
+
+;; Remove the prompt that asks you if you want to kill a buffer with a live process attached to it
+(setq kill-buffer-query-functions
+      (remq 'process-kill-buffer-query-function
+            kill-buffer-query-functions))
+
+;; tooltips the echo area
+(tooltip-mode -1)
+(setq tooltip-use-echo-area t)
+
 
 
 
@@ -153,3 +166,12 @@
 
 ;; Auto complete
 (setq-default ac-sources '(ac-source-words-in-all-buffer))
+
+;; complain whenever I try to save a file with CRLF in it
+;; https://synker.wordpress.com/2011/09/13/old-annoyances-that-live-on/
+(defun my-save-hook ()
+  (if (and (not (eq buffer-file-coding-system nil))
+           (not (string-match "unix" (symbol-name buffer-file-coding-system)))
+           (y-or-n-p "Convert for UNIX? "))
+      (setq buffer-file-coding-system 'undecided-unix)))
+(add-hook 'before-save-hook 'my-save-hook)
