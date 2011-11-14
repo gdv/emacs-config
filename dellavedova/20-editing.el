@@ -111,10 +111,9 @@
 
 ;; Unique buffer names
 (require 'uniquify)
-(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
 (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
-(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 
 ; Search behavior
@@ -175,3 +174,21 @@
            (y-or-n-p "Convert for UNIX? "))
       (setq buffer-file-coding-system 'undecided-unix)))
 (add-hook 'before-save-hook 'my-save-hook)
+
+;; choose your own fonts, in a system dependant way
+(set-frame-font "Inconsolata-14")
+
+(global-hl-line-mode)			; highlight current line
+
+
+;; copy/paste with C-c and C-v and C-x, check out C-RET too
+(cua-mode)
+
+;; Use the clipboard, pretty please, so that copy/paste "works"
+(setq x-select-enable-clipboard t)
+
+;; whenever an external process changes a file underneath emacs, and there
+;; was no unsaved changes in the corresponding buffer, just revert its
+;; content to reflect what's on-disk.
+(global-auto-revert-mode 1)
+
