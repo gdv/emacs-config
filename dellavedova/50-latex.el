@@ -3,83 +3,88 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setenv "TEXINPUTS" (concat ".:~/texmf//:" (getenv "TEXINPUTS")))
 (setenv "BIBINPUTS" (concat ".:~/Articoli/BibInput:" (getenv "BIBINPUTS")))
+(add-hook 'LaTeX-mode-hook 'my-latex-mode-init)
+
+;; Since I always have some open latex files, there is no need to
+;; use autoloads or put too much stuff in the hook
+
+
+(defun my-latex-mode-init ()
+  (setq fill-column 78)
+  ;; (define-key LaTeX-mode-map [(f10)]   '(TeX-command-master "BibTeX"))
+  (define-key LaTeX-mode-map [(f9)]    'TeX-view)
+  (define-key LaTeX-mode-map [(f12)]   'save-and-latex-file)
+  (define-key LaTeX-mode-map (kbd "_") 'tex-smart-underscore)
+  (define-key LaTeX-mode-map (kbd "^") 'tex-smart-caret)
+  (define-key LaTeX-mode-map (kbd ".") 'tex-smart-period)
+  ;;  (define-key LaTeX-mode-map [tab] 'indent-or-complete)
+  
+  (setq buffer-file-coding-system 'utf-8)
+  (setq TeX-shell "/bin/bash")
+  
+  (which-func-mode 1)
+;;; LaTeX
+;;; This file is part of the Emacs Dev Kit
+
+  ;; AUCTeX configuration
+  (setq-default TeX-master nil)
+
+  (turn-on-auto-fill)
+
+  
+  ;;Abbreviations
+  (load "latex-abbrev.el")
+  (abbrev-mode t)
+  (setq local-abbrev-table LaTeX-mode-abbrev-table)
+  
+  ;; Smart quotes
+  (defadvice TeX-insert-quote (around wrap-region activate)
+    (cond
+     (mark-active
+      (let ((skeleton-end-newline nil))
+        (skeleton-insert `(nil ,TeX-open-quote _ ,TeX-close-quote) -1)))
+     ((looking-at (regexp-opt (list TeX-open-quote TeX-close-quote)))
+      (forward-char (length TeX-open-quote)))
+     (t
+      ad-do-it)))
+  (put 'TeX-insert-quote 'delete-selection nil)
+  
+  ;; More complex editing features
+  ;;  (load "latex-bindings.el")
+  ;;  (my-latex-bindings)
+  
+  ;; Math mode for LaTex
+  (LaTeX-math-mode)
+  
+  ;; Outline mode
+  (outline-minor-mode t)
+  (define-key LaTeX-mode-map '[C-prev] 'outline-previo-visible-heading)
+  (define-key LaTeX-mode-map '[C-next] 'outline-next-visible-heading)
+  
+  (make-local-variable 'write-contents-hooks)
+  (add-hook 'write-contents-hooks 'source-untabify)
+  ;; Make compilation window go away if there is no error
+  ;;http://www.emacswiki.org/emacs/ModeCompile
+  (kill-local-variable 'compile-command)
+  ;; (setq mode-compile-modes-alist
+  ;;       (append '((latex-mode . (tex-compile kill-compilation)))
+  ;;               mode-compile-modes-alist))
+
+  ;; Flymake
+  (flymake-mode 1)
+  (define-key LaTeX-mode-map '[M-up] 'flymake-goto-prev-error)
+  (define-key LaTeX-mode-map '[M-down] 'flymake-goto-next-error)
+  
+  (defun flymake-get-tex-args (file-name)
+    (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
+  
+  ;; Flyspell
+  (flyspell-mode t)
+  )
+
 
 ;; PDF mode for latex
 (setq-default TeX-PDF-mode t)
-
-
-(add-hook 'LaTeX-mode-hook
-           #'(lambda ()
-               (interactive)
-               (setq fill-column 78)
-;               (define-key LaTeX-mode-map [(f10)]   '(TeX-command-master "BibTeX"))
-               (define-key LaTeX-mode-map [(f9)]    'TeX-view)
-               (define-key LaTeX-mode-map [(f12)]   'save-and-latex-file)
-               (define-key LaTeX-mode-map (kbd "_") 'tex-smart-underscore)
-               (define-key LaTeX-mode-map (kbd "^") 'tex-smart-caret)
-               (define-key LaTeX-mode-map (kbd ".") 'tex-smart-period)
-                                        ;  (define-key LaTeX-mode-map [tab] 'indent-or-complete)
-
-               (setq buffer-file-coding-system 'utf-8)
-               (setq TeX-shell "/bin/bash")
-
-               (which-func-mode 1)
-
-               ;;Abbreviations
-               (load "latex-abbrev.el")
-               (abbrev-mode t)
-               (setq local-abbrev-table LaTeX-mode-abbrev-table)
-
-               ;; Smart quotes
-               (defadvice TeX-insert-quote (around wrap-region activate)
-                 (cond
-                  (mark-active
-                   (let ((skeleton-end-newline nil))
-                     (skeleton-insert `(nil ,TeX-open-quote _ ,TeX-close-quote) -1)))
-                  ((looking-at (regexp-opt (list TeX-open-quote TeX-close-quote)))
-                   (forward-char (length TeX-open-quote)))
-                  (t
-                   ad-do-it)))
-               (put 'TeX-insert-quote 'delete-selection nil)
-
-               ;; More complex editing features
-               ;;  (load "latex-bindings.el")
-               ;;  (my-latex-bindings)
-
-               ;; Math mode for LaTex
-               (LaTeX-math-mode)
-
-               ;; Outline mode
-               (outline-minor-mode t)
-               (define-key LaTeX-mode-map '[C-prev] 'outline-previo-visible-heading)
-               (define-key LaTeX-mode-map '[C-next] 'outline-next-visible-heading)
-
-               ;; Add a document headings menu
-               (imenu-add-to-menubar "Structure")
-               (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
-               (add-hook 'reftex-mode-hook 'imenu-add-menubar-index)
-
-
-               (make-local-variable 'write-contents-hooks)
-               (add-hook 'write-contents-hooks 'source-untabify)
-                                        ; Make compilation window go away if there is no error
-                                        ;http://www.emacswiki.org/emacs/ModeCompile
-               (kill-local-variable 'compile-command)
-               ;; (setq mode-compile-modes-alist
-               ;;       (append '((latex-mode . (tex-compile kill-compilation)))
-               ;;               mode-compile-modes-alist))
-
-               ;; Flymake
-               (flymake-mode 1)
-               (define-key LaTeX-mode-map '[M-up] 'flymake-goto-prev-error)
-               (define-key LaTeX-mode-map '[M-down] 'flymake-goto-next-error)
-
-               (defun flymake-get-tex-args (file-name)
-                 (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
-
-               ;; Flyspell
-               (flyspell-mode t)
-               ))
 
 
 ;; delete trailing whitespaces
@@ -113,7 +118,6 @@
 
 ;; Turn on auto-fill-mode for BibTeX and LaTeX
 (add-hook 'bibtex-mode-hook 'turn-on-auto-fill)
-(add-hook 'LaTeX-mode-hook 'turn-on-auto-fill)
 
 
 ;;

@@ -49,12 +49,6 @@
     :load "textlint.el")
    ;;TeXtLint finds common grammatical/style errors in a text
    
-   ;; (:name smex				; a better (ido like) M-x
-   ;;        :after (lambda ()
-   ;;                 (setq smex-save-file "~/.emacs.d/.smex-items")
-   ;;                 (global-set-key (kbd "M-x") 'smex)
-   ;;                 (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
-
    (:name magit				; git meet emacs, and a binding
           :after (lambda ()
                    (global-set-key [(f8)] 'magit-status)))
@@ -65,27 +59,12 @@
                    ;; when using AZERTY keyboard, consider C-x C-_
                    (global-set-key (kbd "C-x C-/") 'goto-last-change)))))
 
-;;
-;; Some recipes require extra tools to be installed
-;;
-;; Note: el-get-install requires git, so we know we have at least that.
-;(when (el-get-executable-find "svn")
-;  (loop for p in '(
-;                  yasnippet		; powerful snippet mode
-;                  )
-;	do (add-to-list 'el-get-sources p)))
-
 ;; install new packages and init already installed packages
 (el-get 'sync)
-
-
 
 ;; Navigate windows with M-<arrows>
 (windmove-default-keybindings 'meta)
 (setq windmove-wrap-around t)
-
-
-
 
 ;; Customize related files
 (setq custom-file "~/.emacs.d/custom-config.el")
@@ -103,52 +82,5 @@
   (when (file-exists-p esk-user-dir)
        (mapc 'load (directory-files esk-user-dir nil ".*el$")))
   (desktop-read)
-
-  ;; Taken from Emacs-dev-kit
-  ;; determine the load path dirs
-  ;; as relative to the location of this file
-  (defvar dotfiles-dir "~/.emacs.d/emacs-dev-kit/"
-    "The root Emacs Lisp source folder")
-  ;; external packages reside here
-  (defvar ext-dir (concat dotfiles-dir "vendor/")
-    "The root folder for external packages")
-  (add-to-list 'custom-theme-load-path (concat dotfiles-dir "themes/"))
-
-  ;; load misc utils
-  (load (concat dotfiles-dir "misc-utils"))
-  ;; load editing utils
-  (load (concat dotfiles-dir "editing-utils"))
-  ;; load navigation utils
-  (load (concat dotfiles-dir "navigation-utils"))
-  ;; load coding utils - should be done before coding configs!
-  (load (concat dotfiles-dir "coding-utils"))
-
-  
-  (load (concat ext-dir "projectile" ))
-  (load (concat dotfiles-dir "misc-config"))
-  (load (concat dotfiles-dir "coding-config"))
-
-  (load (concat dotfiles-dir "perl-config"))
-;  (load (concat dotfiles-dir "emacs-lisp-config.el"))
-  (load (concat dotfiles-dir "c-config"))
-
-  (load (concat dotfiles-dir "python-config"))
-
-  (load (concat ext-dir "feature-mode/feature-mode" ))
-  (load (concat dotfiles-dir "ruby-config"))
-
-  (load (concat dotfiles-dir "ibuffer-config"))
-
-  (load (concat dotfiles-dir "auctex-config"))
-
-  (load (concat dotfiles-dir "nxml-config"))
-
-  
-    ;; zenburn color theme setup
-  (if (>= emacs-major-version 24)
-      (load-theme 'zenburn)
-    (progn
-      (require 'color-theme-zenburn)
-      (color-theme-zenburn)))
-)
+  )
 

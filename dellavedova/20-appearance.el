@@ -50,3 +50,20 @@
             'mode-line-position
             "-%-"
             ))
+
+;; Zenburn theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/el-get/zenburn/")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+;(require 'zenburn)
+(load-theme 'zenburn)
+
+;; Frame title
+;; http://tsengf.blogspot.com/search/label/emacs
+(setq frame-title-format
+      '(:eval
+        (if buffer-file-name
+            (replace-regexp-in-string
+             (replace-regexp-in-string "\\\\" "/" (getenv "HOME")) "~"
+             (concat "Emacs " (file-name-directory buffer-file-name) "%b"))
+          (buffer-name)
+          )))

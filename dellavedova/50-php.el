@@ -9,7 +9,6 @@
   (setq buffer-file-coding-system 'utf-8)
   ;; Pear coding standards : http://pear.php.net/manual/en/standards.indenting.php
   (setq case-fold-search t)
-  (setq indent-tabs-mode nil)
   (setq fill-column 78)
   (setq c-basic-offset 4)
   (c-set-offset 'arglist-cont 0)

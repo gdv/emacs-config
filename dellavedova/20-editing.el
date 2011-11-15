@@ -9,7 +9,7 @@
 (setq cua-prefix-override-inhibit-delay 1)
 ;; Copy selection to clipboard (Gnome style)
 (setq x-select-enable-clipboard t)
-
+(delete-selection-mode t)                ; delete the selection with a keypress
 
 ;;; ; don't automatically add new lines when scrolling down at the bottom
 ;;; ; of a buffer
@@ -27,7 +27,16 @@
 
 ; ;; Make a passable attempt at using UTF-8 in buffers
 (setq buffer-file-coding-system 'utf-8)
-(set-language-environment "UTF-8")
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-language-environment "UTF-8")       ; prefer utf-8 for language settings
+(set-input-method nil)                   ; no funky input for normal editing;
+(setq read-quoted-char-radix 10)         ; use decimal, not octal
+
+
 
 
 (setq file-coding-system-alist '
@@ -43,22 +52,22 @@
 (setq-default indent-tabs-mode nil)     ; use spaces (not tabs) for indenting
 (setq kill-ring-max 10)                 ; don't save too many kills
 (setq require-final-newline t)          ; always terminate last line in file
-(setq major-mode 'text-mode)    ; default mode is text mode
 (setq next-screen-context-lines 1)      ; # of lines of overlap when scrolling
-(setq auto-save-interval 300)           ; autosave every N characters typed
-(setq fill-column 88)           ; the column beyond which do word wrap
+(setq fill-column 88)                   ; the column beyond which do word wrap
 (setq scroll-preserve-screen-position t); make pgup/dn remember current line
 (global-auto-revert-mode 1)             ; autorevert buffers if files change
 (setq develock-max-column-plist nil)    ; disable highlighting for develock
+(setq x-select-enable-clipboard t)      ;; Use the clipboard, pretty please, so that copy/paste "works"
+;; simpler way to navigate the contents of the kill-ring
+(when (require 'browse-kill-ring nil 'noerror)
+  (browse-kill-ring-default-keybindings))
+
 
 ;; Put autosave files (ie #foo#) in one place, *not* scattered all over the
 ;; file system! (The make-autosave-file-name function is invoked to determine
 ;; the filename of an autosave file.)
 (setq autosave-dir "~/.emacs-autosave/")
 
-;;; ;;; ;; Specify where backup files are stored
-(setq backup-directory-alist (quote ((".*" . "~/.backups"))))
-(defconst use-backup-dir t)
 
 (defconst query-replace-highlight t)
 (defconst search-highlight t)
@@ -84,6 +93,8 @@
 (setq visible-bell t) ; no beeping
 (when (fboundp 'blink-cursor-mode) (blink-cursor-mode -1)) ; no blinking cursor
 (setq imenu-max-items 40)
+(set-default 'imenu-auto-rescan t)
+
 (setq message-log-max 3000)
 (setq line-number-display-limit 10000000)
 (setq sentence-end-double-space nil)
@@ -105,8 +116,6 @@
 (icomplete-mode 1)
 
 
-;;; Ediff
-(setq ediff-diff-program "diff -EbBw")
 ;;;
 
 ;; Unique buffer names
@@ -114,6 +123,7 @@
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
 (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
+(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
 
 
 ; Search behavior
@@ -180,15 +190,47 @@
 
 (global-hl-line-mode)			; highlight current line
 
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
 
-;; copy/paste with C-c and C-v and C-x, check out C-RET too
-(cua-mode)
+;; Yasnippet
+(yas/initialize)
+(setq auto-mode-alist
+      (cons '("\\.yasnippet" . snippet-mode) auto-mode-alist))
 
-;; Use the clipboard, pretty please, so that copy/paste "works"
-(setq x-select-enable-clipboard t)
 
-;; whenever an external process changes a file underneath emacs, and there
-;; was no unsaved changes in the corresponding buffer, just revert its
-;; content to reflect what's on-disk.
-(global-auto-revert-mode 1)
+;; whitespace-mode
+;; free of trailing whitespace and to use 80-column width, standard indentation
+(setq whitespace-style '(trailing lines space-before-tab
+                                  indentation space-after-tab)
+      whitespace-line-column 80)
+
+(electric-pair-mode t)
+(electric-indent-mode t)
+(electric-layout-mode t)
+
+(autoload 'find-file-in-project "find-file-in-project"  "Find file in project." t)
+
+
+;; indent pasted code
+(dolist (command '(yank yank-pop))
+  (eval `(defadvice ,command (after indent-region activate)
+           (and (not current-prefix-arg)
+                (member major-mode '(emacs-lisp-mode lisp-mode
+                                                     clojure-mode    scheme-mode
+                                                     haskell-mode    ruby-mode
+                                                     rspec-mode      python-mode
+                                                     c-mode          c++-mode
+                                                     objc-mode       latex-mode
+                                                     plain-tex-mode))
+                (let ((mark-even-if-inactive transient-mark-mode))
+                  (indent-region (region-beginning) (region-end) nil))))))
 

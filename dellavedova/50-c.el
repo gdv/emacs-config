@@ -7,7 +7,6 @@
 
  (defun my-c-mode-init ()
    (interactive)
-
    ;; keybindings
    (define-key c-mode-base-map [(control M)] 'reindent-then-newline-and-indent)
    (define-key c-mode-base-map [f12] 'compile)
@@ -23,7 +22,6 @@
    ;; This speeds up indenting a lot.
    (setq c-recognize-knr-p nil)
 
-   (imenu-add-to-menubar "Functions")
    (setq c-default-style "linux")
    (setq c-basic-offset 4)
    ;; set my personal style for the current buffer

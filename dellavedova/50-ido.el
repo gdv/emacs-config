@@ -19,22 +19,18 @@
 ;; use ido for minibuffer completion
 (require 'ido)
 (ido-mode t)
-(setq ido-save-directory-list-file "~/.emacs.d/.ido.last")
-(setq ido-enable-flex-matching t)
-(setq ido-use-filename-at-point 'guess)
-(setq ido-show-dot-for-dired t)
 
-;; (setq
-;;    ido-ignore-buffers               ; ignore these guys
-;;    '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido")
-;;    ido-work-directory-list '("~/Articoli" "~/" "~/Documenti")
-;;    ido-case-fold  t                 ; be case-insensitive
-;;    ido-use-filename-at-point nil    ; don't use filename at point (annoying)
-;;    ido-use-url-at-point nil         ;  don't use url at point (annoying)
-;;    ido-enable-flex-matching t       ; be flexible
-;;    ido-max-prospects 6              ; don't spam my minibuffer
-;;    ido-confirm-unique-completion t) ; wait for RET, even with unique completion
-
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-show-dot-for-dired t
+      ido-max-prospects 10
+      ido-save-directory-list-file "~/.emacs.d/.ido.last"
+      ido-ignore-buffers      '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido")
+      ido-work-directory-list '("~/Articoli" "~/" "~/Documenti")
+      ido-case-fold  t                 ; be case-insensitive
+      ido-default-file-method 'selected-window)
 
 ;; ;; Taken from http://emacs-fu.blogspot.com/2010/02/dealing-with-many-buffers-ibuffer.html
 ;; ;; Modified by Gianluca Della Vedova
