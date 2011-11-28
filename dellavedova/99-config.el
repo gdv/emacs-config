@@ -4,13 +4,6 @@
 ;; file BEFORE the call to custom-set-variables:
 (which-func-mode 1)
 
-(setq completion-ignored-extensions '(".svn/" "CVS/" ".o" "~" ".bin" ".lbin" ".so" ".a"
-                                      ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".log" ".idx"
-                                      ".lot" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f"
-                                      ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl"
-                                      ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky"
-                                      ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps"
-                                      ".vrs" ".pyc" ".pyo" ".jar" ".out"))
 
 (setq apropos-sort-by-scores t)
 (put 'eval-expression 'disabled nil)

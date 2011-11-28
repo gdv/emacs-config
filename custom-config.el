@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector [zenburn-bg zenburn-red zenburn-green zenburn-yellow zenburn-blue zenburn-magenta zenburn-cyan zenburn-fg])
- '(custom-safe-themes (quote ("64b170bd7204fe8e9c45b8f4f445dfb5f52d12ac" "d70e8984f5e99a48e5bcd94ca3c6694d12eefb94" "86adc18aa6fb3ea0a801831f7b0bc88ed5999386" default)))
+ '(custom-safe-themes (quote ("baac41e6656dd9a5fd1f76d7d41662b8bc1dc10b" "64b170bd7204fe8e9c45b8f4f445dfb5f52d12ac" "d70e8984f5e99a48e5bcd94ca3c6694d12eefb94" "86adc18aa6fb3ea0a801831f7b0bc88ed5999386" default)))
  '(el-get-standard-packages (quote ("auto-complete%2b" "flymake-cursor" "el-get" "escreen" "php-mode-improved" "switch-window" "auto-complete" "pabbrev" "smex" "magit" "goto-last-change")))
  '(muse-colors-autogen-headings (quote outline))
  '(muse-colors-inline-image-method (quote muse-colors-use-publishing-directory))

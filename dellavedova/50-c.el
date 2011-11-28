@@ -33,12 +33,6 @@
 
    (setq buffer-file-coding-system 'utf-8)
    (which-func-mode 1)
-   (flymake-mode 1)
-   ;; delete trailing whitespaces
-   (add-hook 'local-write-file-hooks
-             '(lambda()
-                (source-untabify)
-                (save-excursion
-                  (delete-trailing-whitespace)))))
+   (flymake-mode 1))
 
 (add-hook 'c-mode-hook 'my-c-mode-init)

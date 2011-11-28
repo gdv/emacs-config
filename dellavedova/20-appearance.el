@@ -2,6 +2,7 @@
 (global-font-lock-mode 1)
 (setq font-lock-maximum-decoration t)
 ;show paren, brace, and curly brace "partners" at all times
+(setq show-paren-style 'expression)
 (show-paren-mode t)
 
 ;show column number in status bar

@@ -1,9 +1,10 @@
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
 (autoload 'paredit-mode "paredit" "Minor mode for pseudo-structurally editing Lisp code." t)
+(require 'auto-async-byte-compile)
 
 
 (defun my-elisp-mode-hook ()
-;  (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
+  (add-hook 'emacs-lisp-mode-hook 'enable-auto-async-byte-compile-mode)
   (define-key emacs-lisp-mode-map [(meta prior)]         'forward-sexp)
   (define-key emacs-lisp-mode-map [(meta next)]          'backward-sexp)
   ;; ignore byte-compile warnings

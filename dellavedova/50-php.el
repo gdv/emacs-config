@@ -5,8 +5,7 @@
 (defun my-php-hook ()
   (interactive)
   (make-local-variable 'write-contents-hooks)
-  (add-hook 'write-contents-hooks 'source-untabify)
-  (setq buffer-file-coding-system 'utf-8)
+   (setq buffer-file-coding-system 'utf-8)
   ;; Pear coding standards : http://pear.php.net/manual/en/standards.indenting.php
   (setq case-fold-search t)
   (setq fill-column 78)
@@ -24,7 +23,7 @@
 
 
 
-          
+
 ; Taken from http://www.enigmacurry.com/2011/07/01/php-code-compliance-in-emacs/
 
 (require 'php-mode)

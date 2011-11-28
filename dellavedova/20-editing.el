@@ -49,8 +49,7 @@
 
 
 (setq tab-width 4)                      ; tab = 4 spaces
-(setq-default indent-tabs-mode nil)     ; use spaces (not tabs) for indenting
-(setq kill-ring-max 10)                 ; don't save too many kills
+(setq kill-ring-max 50)                 ; don't save too many kills
 (setq require-final-newline t)          ; always terminate last line in file
 (setq next-screen-context-lines 1)      ; # of lines of overlap when scrolling
 (setq fill-column 88)                   ; the column beyond which do word wrap
@@ -164,10 +163,10 @@
    (cond ((and (string-match "finished" string)
                (not (string-match "TextLint" (buffer-string))))
           (message "Build likely successful: closing window")
-          (run-with-timer 2 nil                      
-                          'delete-window              
+          (run-with-timer 2 nil
+                          'delete-window
                           (get-buffer-window buffer t)))
-         (t                                                                    
+         (t
           (message "Compilation exited abnormally: %s" string))))
 
 
@@ -181,7 +180,7 @@
 (defun my-save-hook ()
   (if (and (not (eq buffer-file-coding-system nil))
            (not (string-match "unix" (symbol-name buffer-file-coding-system)))
-           (y-or-n-p "Convert for UNIX? "))
+           )
       (setq buffer-file-coding-system 'undecided-unix)))
 (add-hook 'before-save-hook 'my-save-hook)
 
@@ -209,9 +208,11 @@
 
 ;; whitespace-mode
 ;; free of trailing whitespace and to use 80-column width, standard indentation
-(setq whitespace-style '(trailing lines space-before-tab
+(setq whitespace-style '(empty trailing lines space-before-tab
                                   indentation space-after-tab)
+      indent-tabs-mode nil ; use spaces (not tabs) for indenting
       whitespace-line-column 80)
+(add-hook 'before-save-hook 'whitespace-cleanup)
 
 (electric-pair-mode t)
 (electric-indent-mode t)
@@ -233,4 +234,3 @@
                                                      plain-tex-mode))
                 (let ((mark-even-if-inactive transient-mark-mode))
                   (indent-region (region-beginning) (region-end) nil))))))
-

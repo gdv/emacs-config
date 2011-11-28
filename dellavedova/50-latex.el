@@ -18,10 +18,10 @@
   (define-key LaTeX-mode-map (kbd "^") 'tex-smart-caret)
   (define-key LaTeX-mode-map (kbd ".") 'tex-smart-period)
   ;;  (define-key LaTeX-mode-map [tab] 'indent-or-complete)
-  
+
   (setq buffer-file-coding-system 'utf-8)
   (setq TeX-shell "/bin/bash")
-  
+
   (which-func-mode 1)
 ;;; LaTeX
 ;;; This file is part of the Emacs Dev Kit
@@ -31,12 +31,14 @@
 
   (turn-on-auto-fill)
 
-  
+
   ;;Abbreviations
   (load "latex-abbrev.el")
   (abbrev-mode t)
   (setq local-abbrev-table LaTeX-mode-abbrev-table)
-  
+
+  (yas/minor-mode-on)
+
   ;; Smart quotes
   (defadvice TeX-insert-quote (around wrap-region activate)
     (cond
@@ -48,21 +50,20 @@
      (t
       ad-do-it)))
   (put 'TeX-insert-quote 'delete-selection nil)
-  
+
   ;; More complex editing features
   ;;  (load "latex-bindings.el")
   ;;  (my-latex-bindings)
-  
+
   ;; Math mode for LaTex
   (LaTeX-math-mode)
-  
+
   ;; Outline mode
   (outline-minor-mode t)
   (define-key LaTeX-mode-map '[C-prev] 'outline-previo-visible-heading)
   (define-key LaTeX-mode-map '[C-next] 'outline-next-visible-heading)
-  
+
   (make-local-variable 'write-contents-hooks)
-  (add-hook 'write-contents-hooks 'source-untabify)
   ;; Make compilation window go away if there is no error
   ;;http://www.emacswiki.org/emacs/ModeCompile
   (kill-local-variable 'compile-command)
@@ -74,10 +75,10 @@
   (flymake-mode 1)
   (define-key LaTeX-mode-map '[M-up] 'flymake-goto-prev-error)
   (define-key LaTeX-mode-map '[M-down] 'flymake-goto-next-error)
-  
+
   (defun flymake-get-tex-args (file-name)
     (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
-  
+
   ;; Flyspell
   (flyspell-mode t)
   )
@@ -85,17 +86,6 @@
 
 ;; PDF mode for latex
 (setq-default TeX-PDF-mode t)
-
-
-;; delete trailing whitespaces
-(add-hook 'LaTeX-mode-hook
-          (lambda()
-            (add-hook 'local-write-file-hooks
-                      '(lambda()
-                         (save-excursion
-                           (delete-trailing-whitespace))))))
-
-
 
 
 ;; Try to initialize AUC-TeX mode

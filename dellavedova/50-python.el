@@ -18,7 +18,7 @@
   (which-func-mode 1)
   (setq
    python-check-command "pycheckers"
-   python-shell-interpreter "python3 /home/dellavedova/temp/External/ipython-py3k/ipython.py"
+   python-shell-interpreter "python3 /home/dellavedova/Devel/External/ipython-py3k/ipython.py"
    python-shell-interpreter-args '( "-colors" "Linux")
    python-shell-prompt-regexp "In \\[[0-9]+\\]: "
    python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
@@ -56,14 +56,6 @@ invoked from a Python process, it will switch back to the `python-mode' buffer."
            (switch-to-buffer python-last-buffer)
         ;; buffer's dead; clear the variable.
         (setq python-last-buffer nil)))))
-
-;; delete trailing whitespaces
-(add-hook 'python-mode-hook
-          (lambda()
-            (add-hook 'local-write-file-hooks
-                      '(lambda()
-                         (save-excursion
-                           (delete-trailing-whitespace))))))
 
 ;; Flymake for python
 (when (load "flymake" t)

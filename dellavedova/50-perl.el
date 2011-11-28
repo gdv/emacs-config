@@ -8,7 +8,6 @@
 (defun my-cperl-mode-hook ()
   (interactive)
   (make-local-variable 'write-contents-hooks)
-  (add-hook 'write-contents-hooks 'source-untabify)
   (define-key cperl-mode-map [f12] 'perldb)
   (define-key cperl-mode-map [return] 'newline-and-indent)
   (setq cperl-indent-level 4)
@@ -37,5 +36,3 @@
 
 (eval-after-load "cperl-mode"
   '(add-hook 'cperl-mode-hook 'perlcritic-mode))
-
-

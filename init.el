@@ -6,16 +6,12 @@
 ;;
 ;; Licence: GPLv3
 ;;
-
-;; Turn off mouse interface early in startup to avoid momentary display
-(tool-bar-mode -1)			; no tool bar with icons
-(scroll-bar-mode -1)			; no scroll bars
-
+;;
 ;; on to the visual settings
 (setq inhibit-splash-screen t)		; no splash screen, thanks
+(tool-bar-mode -1)
 (line-number-mode 1)			; have line numbers and
 (column-number-mode 1)			; column numbers in the mode line
-
 
   ;; You can keep system- or user-specific customizations here
 (add-hook 'after-init-hook 'my-after-init)
@@ -24,15 +20,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (require 'el-get)
-;; (unless (require 'el-get nil t)
-;;   (url-retrieve
-;;    "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
-;;    (lambda (s)
-;;      (end-of-buffer)
-;;      (eval-print-last-sexp))))
-
-;; now either el-get is `require'd already, or have been `load'ed by the
-;; el-get installer.
 (setq
  el-get-sources
  '(el-get				; el-get is self-hosting

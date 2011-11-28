@@ -17,3 +17,5 @@
 (setq dired-recursive-copies t)
 (setq dired-recursive-deletes t)
 (setq tramp-default-method "ssh")
+
+(setq dired-listing-switches "-lph")
