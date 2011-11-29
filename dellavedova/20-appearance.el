@@ -38,19 +38,20 @@
 ; Modeline
 (setq-default mode-line-format
       (list " "
-            'mode-line-modified
-            "--"
-            'mode-line-buffer-identification
-            "--"
-            'mode-line-client ":"
-            'mode-line-remote ":"
-            'mode-line-frame-identification
-            "--"
-            'mode-line-modes
-            '(which-func-mode ("" which-func-format "--"))
-            'mode-line-position
-            "-%-"
-            ))
+	    'mode-line-modified
+	    "--"
+	    'mode-line-buffer-identification
+	    "--"
+	    'mode-line-client ":"
+	    'mode-line-remote ":"
+	    'mode-line-frame-identification
+	    "--"
+	    'mode-line-modes
+	    '(which-func-mode ("" which-func-format "--"))
+	    'mode-line-position
+	    "-%-"
+	    ))
+(size-indication-mode t)
 
 ;; Zenburn theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/el-get/zenburn/")
@@ -62,9 +63,9 @@
 ;; http://tsengf.blogspot.com/search/label/emacs
 (setq frame-title-format
       '(:eval
-        (if buffer-file-name
-            (replace-regexp-in-string
-             (replace-regexp-in-string "\\\\" "/" (getenv "HOME")) "~"
-             (concat "Emacs " (file-name-directory buffer-file-name) "%b"))
-          (buffer-name)
-          )))
+	(if buffer-file-name
+	    (replace-regexp-in-string
+	     (replace-regexp-in-string "\\\\" "/" (getenv "HOME")) "~"
+	     (concat "Emacs " (file-name-directory buffer-file-name) "%b"))
+	  (buffer-name)
+	  )))

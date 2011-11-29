@@ -35,16 +35,16 @@
     :description "Allows the integration of TextLint within Emacs"
     :load "textlint.el")
    ;;TeXtLint finds common grammatical/style errors in a text
-   
+
    (:name magit				; git meet emacs, and a binding
-          :after (lambda ()
-                   (global-set-key [(f8)] 'magit-status)))
+	  :after (lambda ()
+		   (global-set-key [(f8)] 'magit-status)))
    (:name flymake-cursor)
 
    (:name goto-last-change		; move pointer back to last change
-          :after (lambda ()
-                   ;; when using AZERTY keyboard, consider C-x C-_
-                   (global-set-key (kbd "C-x C-/") 'goto-last-change)))))
+	  :after (lambda ()
+		   ;; when using AZERTY keyboard, consider C-x C-_
+		   (global-set-key (kbd "C-x C-/") 'goto-last-change)))))
 
 ;; install new packages and init already installed packages
 (el-get 'sync)
@@ -62,12 +62,11 @@
 ;; (add-hook 'after-init-hook 'my-after-init)
 ;;
 (defun my-after-init()
-  (setq esk-user-dir (concat user-emacs-directory user-login-name))
-  (add-to-list 'load-path esk-user-dir)
+  (setq my-user-dir (concat user-emacs-directory user-login-name))
+  (add-to-list 'load-path my-user-dir)
   (add-to-list 'load-path user-emacs-directory)
 
-  (when (file-exists-p esk-user-dir)
-       (mapc 'load (directory-files esk-user-dir nil ".*el$")))
+  (when (file-exists-p my-user-dir)
+       (mapc 'load (directory-files my-user-dir nil ".*el$")))
   (desktop-read)
   )
-
