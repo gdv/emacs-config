@@ -51,6 +51,7 @@
 
 (global-set-key "\C-c;" 'comment-region)
 (global-set-key "\C-c:" 'uncomment-region)
+(global-set-key "\C-c_" 'comment-box)
 
 (global-set-key [kp-add]          'copy-region-as-kill)
 (global-set-key [kp-subtract]          'kill-region)
@@ -72,6 +73,3 @@
 ;; Font size
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
-
-
-

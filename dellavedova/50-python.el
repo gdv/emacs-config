@@ -1,6 +1,7 @@
 ;(autoload 'python-mode "python-mode" "Python Mode." t)
 
-(autoload 'python-mode "python-mode" "Major mode for python files" t)
+(autoload 'python "python-mode" "Major mode for python files" t)
+(require 'python)
 (add-hook 'python-mode-hook 'my-python-mode-hook)
 
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
